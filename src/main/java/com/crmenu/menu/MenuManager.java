@@ -86,13 +86,10 @@ public class MenuManager {
                         // Si es una cabeza de jugador sin propietario, asignar la del jugador actual
                         if (meta instanceof org.bukkit.inventory.meta.SkullMeta) {
                             org.bukkit.inventory.meta.SkullMeta skullMeta = (org.bukkit.inventory.meta.SkullMeta) meta;
-                            try {
-                                org.bukkit.OfflinePlayer owning = skullMeta.getOwningPlayer();
-                                if (owning == null) {
-                                    skullMeta.setOwningPlayer(player);
-                                }
-                            } catch (Throwable ignored) {
-                                // Compatibilidad de versiones: si falla, omitir
+
+                            String owner = skullMeta.getOwner();
+                            if (owner == null || owner.isEmpty()) {
+                                skullMeta.setOwner(player.getName());
                             }
                         }
                         copy.setItemMeta(meta);
